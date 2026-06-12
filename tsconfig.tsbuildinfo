@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/i18n.tsx","./src/main.tsx","./src/components/CarCard.tsx","./src/components/CarImage.tsx","./src/components/Layout.tsx","./src/components/Logo.tsx","./src/data/cars.ts","./src/data/company.ts","./src/pages/CarDetail.tsx","./src/pages/Catalog.tsx","./src/pages/Contact.tsx"],"version":"5.9.3"}
