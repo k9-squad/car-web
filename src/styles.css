@@ -1,20 +1,13 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-ink: #070c18;
-  --color-ink-soft: #0d1526;
-  --color-navy: #0f2a43;
-  --color-gold: #f5b942;
-  --color-gold-soft: #ffd97a;
+  /* 低饱和冷色系：石墨蓝背景 + 雾蓝点缀 */
+  --color-canvas: #0b0e13;
+  --color-panel: #10141b;
+  --color-accent: #8fb0ce;
+  --color-accent-muted: #5b7b99;
 
-  --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', system-ui, -apple-system, sans-serif;
-
-  --animate-shimmer: shimmer 2.8s linear infinite;
-
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
+  --font-sans: 'Mozilla Headline', 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', system-ui, sans-serif;
 }
 
 html {
@@ -22,16 +15,16 @@ html {
 }
 
 body {
-  @apply bg-ink text-slate-200 antialiased;
+  @apply bg-canvas text-zinc-300 antialiased;
 }
 
 ::selection {
-  background: theme(--color-gold);
-  color: theme(--color-navy);
+  background: theme(--color-accent);
+  color: theme(--color-canvas);
 }
 
 /* Thin dark scrollbar to match the theme */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(245, 185, 66, 0.35) transparent;
+  scrollbar-color: rgba(143, 176, 206, 0.3) transparent;
 }
