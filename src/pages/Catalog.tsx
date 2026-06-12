@@ -31,10 +31,10 @@ export function Catalog({ cars, title, subtitle }: CatalogProps) {
 
   return (
     <>
-      <section className="relative overflow-hidden border-b border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent py-14 text-center">
+      <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-surface-2/70 to-transparent py-14 text-center">
         <FadeIn>
-          <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">{title}</h1>
-          <p className="mx-auto mt-3 max-w-2xl px-4 text-zinc-500">{subtitle}</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{title}</h1>
+          <p className="mx-auto mt-3 max-w-2xl px-4 text-muted">{subtitle}</p>
         </FadeIn>
       </section>
 
@@ -43,10 +43,10 @@ export function Catalog({ cars, title, subtitle }: CatalogProps) {
           筛选栏：小屏用两列网格（搜索框整行、两个下拉各占一列），
           桌面端单行 flex，避免突兀换行。
         */}
-        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 sm:p-4">
+        <div className="rounded-xl border border-border bg-surface p-3 sm:p-4">
           <div className="grid grid-cols-2 gap-2.5 sm:flex sm:items-center sm:gap-3">
             <div className="relative col-span-2 sm:flex-1">
-              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
+              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
               <Input
                 type="search"
                 value={keyword}
@@ -78,13 +78,13 @@ export function Catalog({ cars, title, subtitle }: CatalogProps) {
               </SelectContent>
             </Select>
           </div>
-          <p className="mt-2.5 text-right text-xs text-zinc-600 sm:mt-2">
+          <p className="mt-2.5 text-right text-xs text-faint sm:mt-2">
             {filtered.length} {t('results')}
           </p>
         </div>
 
         {filtered.length === 0 ? (
-          <p className="py-16 text-center text-zinc-500">{t('noResults')}</p>
+          <p className="py-16 text-center text-muted">{t('noResults')}</p>
         ) : (
           <div className="mt-7 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((car, i) => (

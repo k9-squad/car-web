@@ -1,9 +1,13 @@
 import { useMemo, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
+import { useTheme, type ResolvedTheme } from '../theme'
 
-const ACCENT = '#8fb0ce'
-const LINE = '#3d5670'
+/** 点线配色随主题切换：浅色背景下加深线条保证可见度 */
+const PALETTE: Record<ResolvedTheme, { accent: string; line: string; star: string }> = {
+  dark: { accent: '#8fb0ce', line: '#3d5670', star: '#6f7d8c' },
+  light: { accent: '#46708f', line: '#9db3c6', star: '#a9bac9' },
+}
 
 /** 斐波那契球面均匀采样，生成点云坐标 */
 function fibonacciSphere(count: number, radius: number) {
@@ -37,7 +41,7 @@ function useBufferGeometry(positions: Float32Array) {
   }, [positions])
 }
 
-function Globe() {
+function Globe({ accent, line }: { accent: string; line: string }) {
   const group = useRef<THREE.Group>(null)
   const ringsRef = useRef<THREE.Group>(null)
 
@@ -69,7 +73,7 @@ function Globe() {
         {/* 球面点云 */}
         <points geometry={pointsGeo}>
           <pointsMaterial
-            color={ACCENT}
+            color={accent}
             size={0.032}
             sizeAttenuation
             transparent
@@ -79,24 +83,24 @@ function Globe() {
         </points>
         {/* 球体线框 */}
         <lineSegments geometry={wireGeo}>
-          <lineBasicMaterial color={LINE} transparent opacity={0.22} />
+          <lineBasicMaterial color={line} transparent opacity={0.28} />
         </lineSegments>
       </group>
 
       {/* 轨道环 */}
       <group ref={ringsRef}>
         <lineLoop geometry={ringGeo} rotation={[Math.PI / 2.15, 0, 0]}>
-          <lineBasicMaterial color={LINE} transparent opacity={0.4} />
+          <lineBasicMaterial color={line} transparent opacity={0.5} />
         </lineLoop>
         <lineLoop geometry={ringGeo} rotation={[Math.PI / 2.6, 0.5, 0.3]} scale={1.18}>
-          <lineBasicMaterial color={LINE} transparent opacity={0.22} />
+          <lineBasicMaterial color={line} transparent opacity={0.3} />
         </lineLoop>
       </group>
     </group>
   )
 }
 
-function Stars() {
+function Stars({ color }: { color: string }) {
   const ref = useRef<THREE.Points>(null)
   const geo = useBufferGeometry(useMemo(() => scatterPoints(260, 26), []))
   useFrame((_, delta) => {
@@ -104,21 +108,23 @@ function Stars() {
   })
   return (
     <points ref={ref} geometry={geo}>
-      <pointsMaterial color="#6f7d8c" size={0.02} sizeAttenuation transparent opacity={0.5} depthWrite={false} />
+      <pointsMaterial color={color} size={0.02} sizeAttenuation transparent opacity={0.5} depthWrite={false} />
     </points>
   )
 }
 
 /** Landing Hero 的点线抽象背景：旋转线框地球仪 + 轨道环 + 远景星点 */
 export function WireGlobe() {
+  const { resolvedTheme } = useTheme()
+  const palette = PALETTE[resolvedTheme]
   return (
     <Canvas
       dpr={[1, 1.8]}
       camera={{ position: [0, 0, 7], fov: 45 }}
       gl={{ antialias: true, alpha: true }}
     >
-      <Globe />
-      <Stars />
+      <Globe accent={palette.accent} line={palette.line} />
+      <Stars color={palette.star} />
     </Canvas>
   )
 }

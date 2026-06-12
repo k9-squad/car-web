@@ -22,7 +22,7 @@ export function CarDetail() {
   if (!car) {
     return (
       <div className="mx-auto w-full max-w-7xl px-4 py-20 text-center sm:px-6">
-        <p className="text-zinc-400">{t('notFound')}</p>
+        <p className="text-muted">{t('notFound')}</p>
         <Button asChild variant="secondary" className="mt-6">
           <Link to="/new">
             <ArrowLeft /> {t('backToList')}
@@ -62,7 +62,7 @@ export function CarDetail() {
     <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:py-12">
       <Link
         to={car.category === 'used' ? '/used' : '/new'}
-        className="mb-6 inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-500 transition-colors hover:text-accent"
+        className="mb-6 inline-flex items-center gap-1.5 text-sm font-semibold text-muted transition-colors hover:text-accent"
       >
         <ArrowLeft className="h-4 w-4" /> {t('backToList')}
       </Link>
@@ -81,7 +81,7 @@ export function CarDetail() {
                 label={`${car.brand} ${car.model}`}
                 sub={`${photoLabel} ${activeIndex + 1}/${count}`}
                 hue={(baseHue + activeIndex * 25) % 360}
-                className="rounded-xl border border-white/10 shadow-xl shadow-black/30"
+                className="rounded-xl border border-border shadow-xl shadow-black/30"
               />
             </motion.div>
           </AnimatePresence>
@@ -103,7 +103,7 @@ export function CarDetail() {
               <div
                 key={`${tab}-${i}`}
                 className={`overflow-hidden rounded-lg border-2 transition-colors ${
-                  i === activeIndex ? 'border-accent' : 'border-transparent hover:border-white/25'
+                  i === activeIndex ? 'border-accent' : 'border-transparent hover:border-border-strong'
                 }`}
               >
                 <CarImage
@@ -115,19 +115,19 @@ export function CarDetail() {
               </div>
             ))}
           </div>
-          <p className="mt-3 text-xs text-zinc-600">{t('watermarkNote')}</p>
+          <p className="mt-3 text-xs text-faint">{t('watermarkNote')}</p>
         </div>
 
         {/* 信息 */}
         <div>
-          <h1 className="flex flex-wrap items-center gap-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+          <h1 className="flex flex-wrap items-center gap-3 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
             {car.brand} {car.model}
             <CarBadge category={car.category} />
           </h1>
-          <p className="mt-2 text-zinc-400">{car.highlight[lang]}</p>
-          <p className="mt-4 text-4xl font-bold text-zinc-100">
+          <p className="mt-2 text-muted">{car.highlight[lang]}</p>
+          <p className="mt-4 text-4xl font-bold text-foreground">
             ${car.price.toLocaleString()}
-            <small className="ml-2 text-sm font-medium text-zinc-500">USD · FOB</small>
+            <small className="ml-2 text-sm font-medium text-muted">USD · FOB</small>
           </p>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -145,14 +145,14 @@ export function CarDetail() {
             </Button>
           </div>
 
-          <h2 className="mt-8 text-lg font-bold text-white">{t('specs')}</h2>
-          <div className="mt-3 overflow-hidden rounded-xl border border-white/10">
+          <h2 className="mt-8 text-lg font-bold text-foreground">{t('specs')}</h2>
+          <div className="mt-3 overflow-hidden rounded-xl border border-border">
             <table className="w-full text-sm">
-              <tbody className="divide-y divide-white/[0.07]">
+              <tbody className="divide-y divide-border">
                 {specs.map(([k, v]) => (
-                  <tr key={k} className="bg-white/[0.02] even:bg-white/[0.045]">
-                    <th className="w-2/5 px-4 py-2.5 text-left font-medium text-zinc-500">{k}</th>
-                    <td className="px-4 py-2.5 text-zinc-100">{v}</td>
+                  <tr key={k} className="even:bg-surface-2/60">
+                    <th className="w-2/5 px-4 py-2.5 text-left font-medium text-muted">{k}</th>
+                    <td className="px-4 py-2.5 text-foreground">{v}</td>
                   </tr>
                 ))}
               </tbody>
@@ -164,10 +164,10 @@ export function CarDetail() {
       {/* 视频 */}
       {car.hasVideo && (
         <section className="mt-14">
-          <h2 className="text-xl font-bold text-white">{t('video')}</h2>
+          <h2 className="text-xl font-bold text-foreground">{t('video')}</h2>
           <div
             onClick={() => setVideoPlaying(!videoPlaying)}
-            className="relative mt-4 flex aspect-video max-w-4xl cursor-pointer select-none flex-col items-center justify-center gap-4 overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-panel to-[#141d29] text-zinc-300 shadow-xl shadow-black/30"
+            className="relative mt-4 flex aspect-video max-w-4xl cursor-pointer select-none flex-col items-center justify-center gap-4 overflow-hidden rounded-xl border border-border bg-gradient-to-br from-[#10141b] to-[#141d29] text-zinc-300 shadow-xl shadow-black/30"
           >
             {videoPlaying ? (
               <div className="flex items-center gap-3 text-sm font-semibold">

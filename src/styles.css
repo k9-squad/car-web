@@ -1,13 +1,63 @@
 @import 'tailwindcss';
 
-@theme {
-  /* 低饱和冷色系：石墨蓝背景 + 雾蓝点缀 */
-  --color-canvas: #0b0e13;
-  --color-panel: #10141b;
-  --color-accent: #8fb0ce;
-  --color-accent-muted: #5b7b99;
+@custom-variant dark (&:where(.dark, .dark *));
 
+/* ===== 语义化主题变量：浅色（默认）/ 深色 ===== */
+:root {
+  color-scheme: light;
+  --background: #f5f7fa;
+  --panel: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #ecf1f5;
+  --border-c: rgba(18, 28, 45, 0.12);
+  --border-strong: rgba(18, 28, 45, 0.24);
+  --foreground: #1a2330;
+  --body-c: #3d4856;
+  --muted: #5d6b7c;
+  --faint: #93a1b1;
+  --accent: #46708f;
+  --primary: #1f2937;
+  --primary-fg: #ffffff;
+  --primary-hover: #111827;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: #0b0e13;
+  --panel: #10141b;
+  --surface: rgba(255, 255, 255, 0.035);
+  --surface-2: rgba(255, 255, 255, 0.07);
+  --border-c: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.25);
+  --foreground: #ffffff;
+  --body-c: #c9cfd8;
+  --muted: #94a0ae;
+  --faint: #5a6573;
+  --accent: #8fb0ce;
+  --primary: #f4f4f5;
+  --primary-fg: #18181b;
+  --primary-hover: #ffffff;
+}
+
+@theme {
   --font-sans: 'Mozilla Headline', 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', system-ui, sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-panel: var(--panel);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border-c);
+  --color-border-strong: var(--border-strong);
+  --color-foreground: var(--foreground);
+  --color-body: var(--body-c);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-primary: var(--primary);
+  --color-primary-fg: var(--primary-fg);
+  --color-primary-hover: var(--primary-hover);
 }
 
 html {
@@ -15,16 +65,17 @@ html {
 }
 
 body {
-  @apply bg-canvas text-zinc-300 antialiased;
+  @apply bg-background text-body antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 ::selection {
-  background: theme(--color-accent);
-  color: theme(--color-canvas);
+  background: var(--accent);
+  color: var(--background);
 }
 
-/* Thin dark scrollbar to match the theme */
+/* Thin scrollbar to match the theme */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(143, 176, 206, 0.3) transparent;
+  scrollbar-color: color-mix(in srgb, var(--accent) 35%, transparent) transparent;
 }

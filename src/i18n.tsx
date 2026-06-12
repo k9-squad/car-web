@@ -4,6 +4,9 @@ export type Lang = 'zh' | 'en'
 
 const dict = {
   zh: {
+    themeLight: '浅色模式',
+    themeDark: '深色模式',
+    themeSystem: '跟随系统',
     home: '首页',
     landingBadge: '中国汽车出口 · 一站式服务',
     landingTitle1: '驾驭品质',
@@ -91,6 +94,9 @@ const dict = {
     photoInterior: '内饰',
   },
   en: {
+    themeLight: 'Light mode',
+    themeDark: 'Dark mode',
+    themeSystem: 'Follow system',
     home: 'Home',
     landingBadge: 'China Auto Export · One-Stop Service',
     landingTitle1: 'Drive Quality',

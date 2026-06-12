@@ -6,10 +6,11 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-zinc-100 text-zinc-900',
-        secondary: 'bg-white/15 text-white backdrop-blur',
+        default: 'bg-primary text-primary-fg',
+        /* secondary 用于图片之上，固定浅色玻璃效果，不随主题变化 */
+        secondary: 'bg-white/20 text-white backdrop-blur',
         outline: 'border border-accent/40 bg-accent/10 text-accent',
-        muted: 'border border-white/10 bg-white/5 text-zinc-400',
+        muted: 'border border-border bg-surface text-muted',
       },
     },
     defaultVariants: { variant: 'default' },

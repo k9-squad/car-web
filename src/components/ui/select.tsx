@@ -13,14 +13,14 @@ const SelectTrigger = forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'flex h-10 w-full items-center justify-between gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2 text-sm text-zinc-100 transition-colors focus:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/30 disabled:opacity-50 [&>span]:truncate',
+      'flex h-10 w-full items-center justify-between gap-2 rounded-lg border border-border bg-surface px-3.5 py-2 text-sm text-foreground transition-colors focus:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/30 disabled:opacity-50 [&>span]:truncate',
       className,
     )}
     {...props}
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 shrink-0 text-zinc-500" />
+      <ChevronDown className="h-4 w-4 shrink-0 text-muted" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ))
@@ -35,7 +35,7 @@ const SelectContent = forwardRef<
       ref={ref}
       position={position}
       className={cn(
-        'relative z-50 max-h-72 min-w-[var(--radix-select-trigger-width)] overflow-y-auto rounded-lg border border-white/10 bg-panel text-zinc-200 shadow-xl shadow-black/50',
+        'relative z-50 max-h-72 min-w-[var(--radix-select-trigger-width)] overflow-y-auto rounded-lg border border-border bg-panel text-body shadow-xl shadow-black/20 dark:shadow-black/50',
         position === 'popper' && 'translate-y-1',
         className,
       )}
@@ -54,7 +54,7 @@ const SelectItem = forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex w-full cursor-pointer select-none items-center rounded-md py-2 pl-3 pr-9 text-sm outline-none data-[highlighted]:bg-white/10 data-[highlighted]:text-white data-[state=checked]:text-accent',
+      'relative flex w-full cursor-pointer select-none items-center rounded-md py-2 pl-3 pr-9 text-sm outline-none data-[highlighted]:bg-surface-2 data-[highlighted]:text-foreground data-[state=checked]:text-accent',
       className,
     )}
     {...props}

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { HashRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { LangProvider, useLang } from './i18n'
+import { ThemeProvider } from './theme'
 import { Layout } from './components/Layout'
 import { Landing } from './pages/Landing'
 import { Catalog } from './pages/Catalog'
@@ -26,8 +27,9 @@ function ScrollToTop() {
 
 export default function App() {
   return (
-    <LangProvider>
-      <HashRouter>
+    <ThemeProvider>
+      <LangProvider>
+        <HashRouter>
         <ScrollToTop />
         <Routes>
           <Route element={<Layout />}>
@@ -39,7 +41,8 @@ export default function App() {
             <Route path="*" element={<Landing />} />
           </Route>
         </Routes>
-      </HashRouter>
-    </LangProvider>
+        </HashRouter>
+      </LangProvider>
+    </ThemeProvider>
   )
 }
