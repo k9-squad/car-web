@@ -1,8 +1,9 @@
 import { company } from '../data/company'
 
 export function Logo({ size = 36 }: { size?: number }) {
+  const [first, second] = company.name.split(' ')
   return (
-    <span className="logo">
+    <span className="inline-flex items-center gap-2.5">
       <svg width={size} height={size} viewBox="0 0 48 48" aria-hidden="true">
         <rect width="48" height="48" rx="10" fill="#0f2a43" />
         <path
@@ -15,8 +16,8 @@ export function Logo({ size = 36 }: { size?: number }) {
         <circle cx="17" cy="32" r="3.2" fill="#f5b942" />
         <circle cx="31" cy="32" r="3.2" fill="#f5b942" />
       </svg>
-      <span className="logo-text">
-        {company.name.split(' ')[0]} <em>{company.name.split(' ')[1]}</em>
+      <span className="whitespace-nowrap text-lg font-extrabold tracking-wide text-white">
+        {first} <em className="not-italic text-gold">{second}</em>
       </span>
     </span>
   )
