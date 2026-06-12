@@ -20,9 +20,9 @@ function ContactCard({ icon, title, value, desc, action, delay }: {
         <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10 text-accent">
           {icon}
         </div>
-        <h2 className="mt-2 text-lg font-bold text-white">{title}</h2>
+        <h2 className="mt-2 text-lg font-bold text-foreground">{title}</h2>
         <p className="break-all font-semibold text-accent">{value}</p>
-        <p className="mb-4 text-sm leading-6 text-zinc-400">{desc}</p>
+        <p className="mb-4 text-sm leading-6 text-muted">{desc}</p>
         <div className="mt-auto">{action}</div>
       </Card>
     </FadeIn>
@@ -34,10 +34,10 @@ export function Contact() {
 
   return (
     <>
-      <section className="relative overflow-hidden border-b border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent py-14 text-center">
+      <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-surface-2/70 to-transparent py-14 text-center">
         <FadeIn>
-          <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">{t('contactTitle')}</h1>
-          <p className="mx-auto mt-3 max-w-2xl px-4 text-zinc-500">{t('contactSub')}</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{t('contactTitle')}</h1>
+          <p className="mx-auto mt-3 max-w-2xl px-4 text-muted">{t('contactSub')}</p>
         </FadeIn>
       </section>
 
@@ -89,7 +89,7 @@ export function Contact() {
                   href={company.facebook}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-sm font-semibold text-zinc-300 underline decoration-accent/50 underline-offset-4 transition-colors hover:text-accent"
+                  className="text-sm font-semibold text-body underline decoration-accent/50 underline-offset-4 transition-colors hover:text-accent"
                 >
                   Facebook
                 </a>
@@ -97,7 +97,7 @@ export function Contact() {
                   href={company.instagram}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-sm font-semibold text-zinc-300 underline decoration-accent/50 underline-offset-4 transition-colors hover:text-accent"
+                  className="text-sm font-semibold text-body underline decoration-accent/50 underline-offset-4 transition-colors hover:text-accent"
                 >
                   Instagram
                 </a>
@@ -109,11 +109,11 @@ export function Contact() {
         <FadeIn delay={0.15} className="mt-14 text-center">
           <div
             aria-label="QR code placeholder"
-            className="mx-auto flex h-36 w-36 items-center justify-center rounded-xl border-2 border-dashed border-white/15 bg-[repeating-linear-gradient(0deg,rgba(255,255,255,.06)_0_10px,transparent_10px_20px),repeating-linear-gradient(90deg,rgba(255,255,255,.06)_0_10px,transparent_10px_20px)] text-2xl font-bold text-accent"
+            className="mx-auto flex h-36 w-36 items-center justify-center rounded-xl border-2 border-dashed border-border bg-[repeating-linear-gradient(0deg,var(--surface-2)_0_10px,transparent_10px_20px),repeating-linear-gradient(90deg,var(--surface-2)_0_10px,transparent_10px_20px)] text-2xl font-bold text-accent"
           >
             QR
           </div>
-          <p className="mt-3 text-sm text-zinc-500">{t('qrTip')}</p>
+          <p className="mt-3 text-sm text-muted">{t('qrTip')}</p>
         </FadeIn>
       </section>
     </>

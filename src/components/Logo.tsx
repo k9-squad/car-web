@@ -16,7 +16,7 @@ export function Logo({ size = 34 }: { size?: number }) {
         <circle cx="17" cy="32" r="3.2" fill="#8fb0ce" />
         <circle cx="31" cy="32" r="3.2" fill="#8fb0ce" />
       </svg>
-      <span className="whitespace-nowrap text-lg font-bold tracking-wide text-white">
+      <span className="whitespace-nowrap text-lg font-bold tracking-wide text-foreground">
         {first} <em className="not-italic font-light text-accent">{second}</em>
       </span>
     </span>

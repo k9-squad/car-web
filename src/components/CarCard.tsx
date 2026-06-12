@@ -40,7 +40,7 @@ export function CarCard({ car }: { car: Car }) {
     >
       <Link
         to={`/car/${car.id}`}
-        className="flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] shadow-lg shadow-black/20 transition-colors duration-300 hover:border-accent/40 hover:bg-white/[0.05]"
+        className="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-surface shadow-lg shadow-black/10 transition-colors duration-300 hover:border-accent/40 dark:shadow-black/20"
       >
         <div className="relative overflow-hidden">
           <div className="transition-transform duration-500 group-hover:scale-[1.04]">
@@ -51,10 +51,10 @@ export function CarCard({ car }: { car: Car }) {
           </span>
         </div>
         <div className="flex flex-1 flex-col gap-2.5 p-5">
-          <h3 className="text-base font-bold text-white">
+          <h3 className="text-base font-bold text-foreground">
             {car.brand} {car.model}
           </h3>
-          <p className="min-h-10 text-sm leading-5 text-zinc-400">{car.highlight[lang]}</p>
+          <p className="min-h-10 text-sm leading-5 text-muted">{car.highlight[lang]}</p>
           <div className="flex flex-wrap gap-1.5">
             {tags.map((tag) => (
               <Badge key={tag} variant="muted" className="rounded-md font-medium tracking-normal">
@@ -63,8 +63,8 @@ export function CarCard({ car }: { car: Car }) {
             ))}
           </div>
           <div className="mt-auto flex items-center justify-between pt-2">
-            <strong className="text-xl font-bold text-zinc-100">${car.price.toLocaleString()}</strong>
-            <span className="inline-flex items-center gap-1 text-sm font-semibold text-zinc-500 transition-colors group-hover:text-accent">
+            <strong className="text-xl font-bold text-foreground">${car.price.toLocaleString()}</strong>
+            <span className="inline-flex items-center gap-1 text-sm font-semibold text-muted transition-colors group-hover:text-accent">
               {t('viewDetail')} <ArrowRight className="h-4 w-4" />
             </span>
           </div>
