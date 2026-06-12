@@ -1,17 +1,17 @@
 import { useMemo, useState } from 'react'
+import { Search } from 'lucide-react'
 import type { Car } from '../data/cars'
 import { useLang } from '../i18n'
 import { CarCard } from '../components/CarCard'
 import { FadeIn } from '../components/FadeIn'
+import { Input } from '../components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
 
 interface CatalogProps {
   cars: Car[]
   title: string
   subtitle: string
 }
-
-const inputClass =
-  'rounded-xl border border-white/15 bg-white/[0.06] px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition focus:border-gold/70 focus:ring-2 focus:ring-gold/30 [&>option]:bg-ink-soft'
 
 export function Catalog({ cars, title, subtitle }: CatalogProps) {
   const { t } = useLang()
@@ -31,42 +31,60 @@ export function Catalog({ cars, title, subtitle }: CatalogProps) {
 
   return (
     <>
-      <section className="relative overflow-hidden border-b border-white/10 bg-gradient-to-br from-navy/60 to-transparent py-14 text-center">
-        <div className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[600px] -translate-x-1/2 rounded-full bg-gold/10 blur-3xl" />
+      <section className="relative overflow-hidden border-b border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent py-14 text-center">
         <FadeIn>
-          <h1 className="text-3xl font-extrabold text-white sm:text-4xl">{title}</h1>
-          <p className="mx-auto mt-3 max-w-2xl px-4 text-slate-400">{subtitle}</p>
+          <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">{title}</h1>
+          <p className="mx-auto mt-3 max-w-2xl px-4 text-zinc-500">{subtitle}</p>
         </FadeIn>
       </section>
 
       <section className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:pb-16">
-        <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-          <input
-            type="search"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            placeholder={t('searchPlaceholder')}
-            className={`min-w-40 flex-1 ${inputClass}`}
-          />
-          <select value={brand} onChange={(e) => setBrand(e.target.value)} className={inputClass}>
-            <option value="all">{t('allBrands')}</option>
-            {brands.map((b) => (
-              <option key={b} value={b}>{b}</option>
-            ))}
-          </select>
-          <select value={energy} onChange={(e) => setEnergy(e.target.value)} className={inputClass}>
-            <option value="all">{t('allEnergy')}</option>
-            <option value="EV">{t('ev')}</option>
-            <option value="Hybrid">{t('hybrid')}</option>
-            <option value="Gasoline">{t('gasoline')}</option>
-          </select>
-          <span className="ml-auto whitespace-nowrap text-sm text-slate-500">
+        {/*
+          筛选栏：小屏用两列网格（搜索框整行、两个下拉各占一列），
+          桌面端单行 flex，避免突兀换行。
+        */}
+        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 sm:p-4">
+          <div className="grid grid-cols-2 gap-2.5 sm:flex sm:items-center sm:gap-3">
+            <div className="relative col-span-2 sm:flex-1">
+              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
+              <Input
+                type="search"
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+                placeholder={t('searchPlaceholder')}
+                className="pl-10"
+              />
+            </div>
+            <Select value={brand} onValueChange={setBrand}>
+              <SelectTrigger className="sm:w-44" aria-label={t('allBrands')}>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t('allBrands')}</SelectItem>
+                {brands.map((b) => (
+                  <SelectItem key={b} value={b}>{b}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Select value={energy} onValueChange={setEnergy}>
+              <SelectTrigger className="sm:w-36" aria-label={t('allEnergy')}>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t('allEnergy')}</SelectItem>
+                <SelectItem value="EV">{t('ev')}</SelectItem>
+                <SelectItem value="Hybrid">{t('hybrid')}</SelectItem>
+                <SelectItem value="Gasoline">{t('gasoline')}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <p className="mt-2.5 text-right text-xs text-zinc-600 sm:mt-2">
             {filtered.length} {t('results')}
-          </span>
+          </p>
         </div>
 
         {filtered.length === 0 ? (
-          <p className="py-16 text-center text-slate-500">{t('noResults')}</p>
+          <p className="py-16 text-center text-zinc-500">{t('noResults')}</p>
         ) : (
           <div className="mt-7 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((car, i) => (

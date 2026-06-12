@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowLeft, Mail, Play } from 'lucide-react'
 import { getCar } from '../data/cars'
 import { company } from '../data/company'
 import { useLang } from '../i18n'
 import { CarImage } from '../components/CarImage'
 import { CarBadge, hueFor } from '../components/CarCard'
+import { Button } from '../components/ui/button'
 
 type Tab = 'exterior' | 'interior'
 
@@ -20,10 +22,12 @@ export function CarDetail() {
   if (!car) {
     return (
       <div className="mx-auto w-full max-w-7xl px-4 py-20 text-center sm:px-6">
-        <p className="text-slate-400">{t('notFound')}</p>
-        <Link to="/new" className="mt-6 inline-block rounded-xl border border-white/20 px-6 py-3 text-sm font-bold text-white hover:border-gold/60 hover:text-gold">
-          ← {t('backToList')}
-        </Link>
+        <p className="text-zinc-400">{t('notFound')}</p>
+        <Button asChild variant="secondary" className="mt-6">
+          <Link to="/new">
+            <ArrowLeft /> {t('backToList')}
+          </Link>
+        </Button>
       </div>
     )
   }
@@ -58,9 +62,9 @@ export function CarDetail() {
     <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:py-12">
       <Link
         to={car.category === 'used' ? '/used' : '/new'}
-        className="mb-6 inline-block text-sm font-semibold text-slate-400 transition-colors hover:text-gold"
+        className="mb-6 inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-500 transition-colors hover:text-accent"
       >
-        ← {t('backToList')}
+        <ArrowLeft className="h-4 w-4" /> {t('backToList')}
       </Link>
 
       <div className="grid items-start gap-8 lg:grid-cols-[7fr_5fr] lg:gap-12">
@@ -69,32 +73,28 @@ export function CarDetail() {
           <AnimatePresence mode="wait">
             <motion.div
               key={`${tab}-${activeIndex}`}
-              initial={{ opacity: 0.4, scale: 0.99 }}
+              initial={{ opacity: 0.4, scale: 0.995 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.25 }}
+              transition={{ duration: 0.22 }}
             >
               <CarImage
                 label={`${car.brand} ${car.model}`}
                 sub={`${photoLabel} ${activeIndex + 1}/${count}`}
                 hue={(baseHue + activeIndex * 25) % 360}
-                className="rounded-2xl border border-white/10 shadow-xl shadow-black/40"
+                className="rounded-xl border border-white/10 shadow-xl shadow-black/30"
               />
             </motion.div>
           </AnimatePresence>
 
-          <div className="mt-4 flex gap-2">
+          <div className="mt-4 grid grid-cols-2 gap-2">
             {(['exterior', 'interior'] as Tab[]).map((tb) => (
-              <button
+              <Button
                 key={tb}
+                variant={tab === tb ? 'default' : 'secondary'}
                 onClick={() => { setTab(tb); setActiveIndex(0) }}
-                className={`flex-1 rounded-xl border py-2.5 text-sm font-bold transition-colors ${
-                  tab === tb
-                    ? 'border-gold bg-gold text-navy'
-                    : 'border-white/15 bg-white/[0.04] text-slate-400 hover:border-white/30 hover:text-white'
-                }`}
               >
                 {tb === 'exterior' ? t('exterior') : t('interior')}
-              </button>
+              </Button>
             ))}
           </div>
 
@@ -102,8 +102,8 @@ export function CarDetail() {
             {Array.from({ length: count }, (_, i) => (
               <div
                 key={`${tab}-${i}`}
-                className={`overflow-hidden rounded-xl border-2 transition-colors ${
-                  i === activeIndex ? 'border-gold' : 'border-transparent hover:border-white/30'
+                className={`overflow-hidden rounded-lg border-2 transition-colors ${
+                  i === activeIndex ? 'border-accent' : 'border-transparent hover:border-white/25'
                 }`}
               >
                 <CarImage
@@ -115,46 +115,44 @@ export function CarDetail() {
               </div>
             ))}
           </div>
-          <p className="mt-3 text-xs text-slate-600">{t('watermarkNote')}</p>
+          <p className="mt-3 text-xs text-zinc-600">{t('watermarkNote')}</p>
         </div>
 
         {/* 信息 */}
         <div>
-          <h1 className="flex flex-wrap items-center gap-3 text-2xl font-extrabold text-white sm:text-3xl">
+          <h1 className="flex flex-wrap items-center gap-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
             {car.brand} {car.model}
             <CarBadge category={car.category} />
           </h1>
-          <p className="mt-2 text-slate-400">{car.highlight[lang]}</p>
-          <p className="mt-4 text-4xl font-black text-gold">
+          <p className="mt-2 text-zinc-400">{car.highlight[lang]}</p>
+          <p className="mt-4 text-4xl font-bold text-zinc-100">
             ${car.price.toLocaleString()}
-            <small className="ml-2 text-sm font-semibold text-slate-500">USD · FOB</small>
+            <small className="ml-2 text-sm font-medium text-zinc-500">USD · FOB</small>
           </p>
 
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              href={`${company.whatsappLink}?text=${inquiryText}`}
-              target="_blank"
-              rel="noreferrer"
-              className="flex-1 rounded-xl bg-[#25d366] px-6 py-3.5 text-center text-sm font-extrabold text-white shadow-lg shadow-[#25d366]/25 transition hover:-translate-y-0.5 hover:brightness-110 sm:flex-none"
-            >
-              {t('inquireWhatsApp')}
-            </a>
-            <a
-              href={`mailto:${company.email}?subject=${encodeURIComponent(`Inquiry: ${car.year} ${car.brand} ${car.model}`)}&body=${inquiryText}`}
-              className="flex-1 rounded-xl border border-white/20 bg-white/5 px-6 py-3.5 text-center text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:border-gold/60 hover:text-gold sm:flex-none"
-            >
-              {t('inquireEmail')}
-            </a>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg" variant="whatsapp" className="flex-1 sm:flex-none">
+              <a href={`${company.whatsappLink}?text=${inquiryText}`} target="_blank" rel="noreferrer">
+                {t('inquireWhatsApp')}
+              </a>
+            </Button>
+            <Button asChild size="lg" variant="secondary" className="flex-1 sm:flex-none">
+              <a
+                href={`mailto:${company.email}?subject=${encodeURIComponent(`Inquiry: ${car.year} ${car.brand} ${car.model}`)}&body=${inquiryText}`}
+              >
+                <Mail /> {t('inquireEmail')}
+              </a>
+            </Button>
           </div>
 
           <h2 className="mt-8 text-lg font-bold text-white">{t('specs')}</h2>
-          <div className="mt-3 overflow-hidden rounded-2xl border border-white/10">
+          <div className="mt-3 overflow-hidden rounded-xl border border-white/10">
             <table className="w-full text-sm">
-              <tbody className="divide-y divide-white/10">
+              <tbody className="divide-y divide-white/[0.07]">
                 {specs.map(([k, v]) => (
-                  <tr key={k} className="bg-white/[0.03] even:bg-white/[0.06]">
-                    <th className="w-2/5 px-4 py-2.5 text-left font-semibold text-slate-400">{k}</th>
-                    <td className="px-4 py-2.5 text-white">{v}</td>
+                  <tr key={k} className="bg-white/[0.02] even:bg-white/[0.045]">
+                    <th className="w-2/5 px-4 py-2.5 text-left font-medium text-zinc-500">{k}</th>
+                    <td className="px-4 py-2.5 text-zinc-100">{v}</td>
                   </tr>
                 ))}
               </tbody>
@@ -169,26 +167,26 @@ export function CarDetail() {
           <h2 className="text-xl font-bold text-white">{t('video')}</h2>
           <div
             onClick={() => setVideoPlaying(!videoPlaying)}
-            className="relative mt-4 flex aspect-video max-w-4xl cursor-pointer select-none flex-col items-center justify-center gap-4 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-ink-soft to-navy/50 text-slate-300 shadow-xl shadow-black/40"
+            className="relative mt-4 flex aspect-video max-w-4xl cursor-pointer select-none flex-col items-center justify-center gap-4 overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-panel to-[#141d29] text-zinc-300 shadow-xl shadow-black/30"
           >
             {videoPlaying ? (
               <div className="flex items-center gap-3 text-sm font-semibold">
-                <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-red-500" />
+                <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-red-400" />
                 {car.brand} {car.model} — demo video playing…
               </div>
             ) : (
               <>
                 <motion.span
-                  whileHover={{ scale: 1.1 }}
-                  className="flex h-16 w-16 items-center justify-center rounded-full bg-gold pl-1 text-2xl text-navy shadow-lg shadow-gold/30"
+                  whileHover={{ scale: 1.08 }}
+                  className="flex h-16 w-16 items-center justify-center rounded-full bg-zinc-100 text-zinc-900 shadow-lg shadow-black/40"
                   aria-hidden="true"
                 >
-                  ▶
+                  <Play className="ml-1 h-6 w-6 fill-current" />
                 </motion.span>
                 <span className="text-sm">{t('videoPlaceholder')}</span>
               </>
             )}
-            <span className="pointer-events-none absolute right-3 top-3 rounded bg-black/45 px-2 py-0.5 text-[11px] font-extrabold tracking-widest text-white/85">
+            <span className="pointer-events-none absolute right-3 top-3 rounded bg-black/45 px-2 py-0.5 text-[11px] font-bold tracking-widest text-white/80">
               {company.name}
             </span>
           </div>
