@@ -6,15 +6,18 @@
 ## 技术栈
 
 - **Vite + React 18 + TypeScript** — 现代前端架构
+- **Tailwind CSS v4** — 原子化样式，深色高级感主题
+- **Framer Motion** — 页面滚动渐入 / 悬浮 / 菜单动效
+- **Three.js (React Three Fiber + drei)** — Landing 页 3D 展车视觉
 - **React Router (HashRouter)** — 无需服务端配置即可在 GitHub Pages 正常路由
-- 纯 CSS 响应式布局，PC / 手机端自适应
-- 中 / 英 双语切换
+- 响应式布局，PC / 手机端自适应；中 / 英 双语切换
 
 ## 页面
 
 | 路由 | 页面 |
 | --- | --- |
-| `#/` | 新车目录（搜索 + 品牌 / 能源筛选） |
+| `#/` | Landing：3D 展车 Hero、品牌亮点、数据、精选车型、双 CTA |
+| `#/new` | 新车目录（搜索 + 品牌 / 能源筛选） |
 | `#/used` | 二手车目录（2022 - 2025） |
 | `#/car/:id` | 车辆详情：参数表、外观 / 内饰图集、视频、WhatsApp / 邮箱询价 |
 | `#/contact` | 联系我们：WhatsApp、邮箱、公司信息、二维码占位 |
